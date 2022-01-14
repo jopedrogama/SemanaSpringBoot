@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.api.logisticaapi.Domain.Exceptions.DomainException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -13,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
@@ -39,4 +42,17 @@ public class apiExceptionHandler extends ResponseEntityExceptionHandler {
                 invalidArguments);
         return handleExceptionInternal(ex, errorMessage, headers, status, request);
     }
+
+    @ExceptionHandler(DomainException.class)
+    public ResponseEntity<Object> handleDomain(DomainException ex, WebRequest req) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        ErrorMessageResponse errorMessage = new ErrorMessageResponse();
+        errorMessage.setHttpStatus(status.value());
+        errorMessage.setDateTime(LocalDateTime.now());
+        errorMessage.setMessage(ex.getMessage());
+
+        return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), status, req);
+    }
+
 }

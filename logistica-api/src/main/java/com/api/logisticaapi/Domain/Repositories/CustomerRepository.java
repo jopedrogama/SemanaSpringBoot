@@ -1,6 +1,7 @@
 package com.api.logisticaapi.Domain.Repositories;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.api.logisticaapi.Domain.Models.Customer;
 
@@ -11,8 +12,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 
-    List<Customer> findByEmail(String email);
+    List<Customer> findByName(String name);
 
     List<Customer> findByEmailContaining(String email);
+
+    Optional<Customer> findByEmail(String email);
 
 }

@@ -9,6 +9,7 @@ import javax.validation.Valid;
 
 import com.api.logisticaapi.Domain.Models.Customer;
 import com.api.logisticaapi.Domain.Repositories.CustomerRepository;
+import com.api.logisticaapi.Domain.Services.CustomerCatalogService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,11 +31,12 @@ public class CustomerController {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private CustomerCatalogService customerCatalogService;
+
     @GetMapping()
     public List<Customer> list() {
         return customerRepository.findAll();
-        // return customerRepository.findByEmail("jopedrogama@gmail.com");
-        // return customerRepository.findByEmailContaining("@gmail.com");
     }
 
     @GetMapping("/{customerId}")
@@ -52,7 +54,7 @@ public class CustomerController {
     @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
     public Customer addCustomer(@Valid @RequestBody Customer customer) {
-        return customerRepository.save(customer);
+        return customerCatalogService.save(customer);
     }
 
     @PutMapping("/{customerId}")
@@ -62,7 +64,7 @@ public class CustomerController {
             return ResponseEntity.notFound().build();
         }
         customer.setId(customerId);
-        customerRepository.save(customer);
+        customerCatalogService.save(customer);
 
         return ResponseEntity.ok(customer);
     }
@@ -74,46 +76,8 @@ public class CustomerController {
             return ResponseEntity.notFound().build();
         }
 
-        customerRepository.deleteById(customerId);
+        customerCatalogService.delete(customerId);
         return ResponseEntity.noContent().build();
     }
 
-    /*
-     * Metodo 2
-     */
-
-    // @PersistenceContext
-    // private EntityManager manager;
-
-    // @GetMapping("/customers")
-    // public List<Customer> list() {
-    // // JPQL
-    // return manager.createQuery("from Customer", Customer.class).getResultList();
-    // }
-
-    // @GetMapping("/customers")
-    // public List<Customer> listar() {
-
-    // /* METODO 1
-    // * THERE ARE MANY WAYS TO DO THE RETURN.
-    // * FIRST ONE IS AS COMMENT BELLOW
-    // */
-
-    // // List<Customer> listCustomers = new ArrayList<>();
-
-    // // listCustomers.add(new Customer(
-    // // (long) 1, "Joao", "jopedrogama@gmail.com", "62981613459"));
-
-    // // listCustomers.add(new Customer(
-    // // (long) 2, "Thiago", "thiago_fel@gmail.com", "62982329100"));
-
-    // // return listCustomers;
-
-    // var customer1 = new Customer((long) 1, "Joao", "jopedrogama@gmail.com",
-    // "62981613459");
-    // var customer2 = new Customer((long) 2, "Thiago", "thiago_fel@gmail.com",
-    // "62982329100");
-
-    // return Arrays.asList(customer1, customer2);
-    // }
 }
