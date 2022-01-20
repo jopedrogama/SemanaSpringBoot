@@ -1,13 +1,12 @@
 package com.api.logisticaapi.Domain.Services;
 
-import javax.transaction.Transactional;
-
 import com.api.logisticaapi.Domain.Exceptions.DomainException;
 import com.api.logisticaapi.Domain.Models.Customer;
 import com.api.logisticaapi.Domain.Repositories.CustomerRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class CustomerCatalogService {
@@ -35,4 +34,8 @@ public class CustomerCatalogService {
         customerRepository.deleteById(customerId);
     }
 
+    public Customer findCustomer(Long customerId) {
+        return customerRepository.findById(customerId)
+                .orElseThrow(() -> new DomainException("Customer not found"));
+    }
 }
