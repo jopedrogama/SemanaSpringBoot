@@ -9,8 +9,8 @@ create table delivery(
 	-- Embeeded recipient infos
 	recipient_name varchar(60) not null,
 	recipient_street varchar(255) not null,
-	recipient_building_number varchar(255) not null,
-	recipient_address_complement varchar(155) not null, 
+	recipient_building_number varchar(255),
+	recipient_address_complement varchar(155), 
 	recipient_district varchar(30) not null,
 	recipient_cep varchar(8) not null,
 	recipient_city varchar(255) not null,

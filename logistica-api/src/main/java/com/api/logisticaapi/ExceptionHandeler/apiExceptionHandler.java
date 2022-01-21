@@ -1,6 +1,6 @@
 package com.api.logisticaapi.ExceptionHandeler;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class apiExceptionHandler extends ResponseEntityExceptionHandler {
             invalidArguments.add(new ErrorMessageResponse.Argument(errorName, message));
         });
 
-        ErrorMessageResponse errorMessage = new ErrorMessageResponse(status.value(), "Error", LocalDateTime.now(),
+        ErrorMessageResponse errorMessage = new ErrorMessageResponse(status.value(), "Error", OffsetDateTime.now(),
                 invalidArguments);
         return handleExceptionInternal(ex, errorMessage, headers, status, request);
     }
@@ -49,7 +49,7 @@ public class apiExceptionHandler extends ResponseEntityExceptionHandler {
 
         ErrorMessageResponse errorMessage = new ErrorMessageResponse();
         errorMessage.setHttpStatus(status.value());
-        errorMessage.setDateTime(LocalDateTime.now());
+        errorMessage.setDateTime(OffsetDateTime.now());
         errorMessage.setMessage(ex.getMessage());
 
         return handleExceptionInternal(ex, errorMessage, new HttpHeaders(), status, req);

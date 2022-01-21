@@ -1,6 +1,6 @@
 package com.api.logisticaapi.ExceptionHandeler;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -19,7 +19,7 @@ public class ErrorMessageResponse {
 
     private Integer HttpStatus;
     private String message;
-    private LocalDateTime dateTime;
+    private OffsetDateTime dateTime;
     private List<Argument> arguments;
 
     @AllArgsConstructor

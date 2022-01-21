@@ -1,6 +1,6 @@
 package com.api.logisticaapi.Domain.Services;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import com.api.logisticaapi.Domain.Models.Delivery;
 import com.api.logisticaapi.Domain.Models.DeliveryStatus;
@@ -25,7 +25,7 @@ public class RequestDeliveryService {
         var customer = customerCatalogService.findCustomer(delivery.getCustomer().getId());
 
         delivery.setDelivery_status(DeliveryStatus.PENDING);
-        delivery.setOrder_date(LocalDateTime.now());
+        delivery.setOrder_date(OffsetDateTime.now());
         delivery.setCustomer(customer);
         // CEP pesquisa e seta valores
 
