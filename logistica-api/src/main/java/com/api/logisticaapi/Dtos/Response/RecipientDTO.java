@@ -1,4 +1,4 @@
-package com.api.logisticaapi.Dtos;
+package com.api.logisticaapi.Dtos.Response;
 
 import lombok.Getter;
 import lombok.Setter;

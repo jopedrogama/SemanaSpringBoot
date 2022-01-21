@@ -1,4 +1,4 @@
-package com.api.logisticaapi.Dtos;
+package com.api.logisticaapi.Dtos.Response;
 
 import java.math.BigDecimal;
 import java.time.OffsetDateTime;

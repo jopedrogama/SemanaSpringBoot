@@ -7,7 +7,8 @@ import javax.validation.Valid;
 import com.api.logisticaapi.Domain.Models.Delivery;
 import com.api.logisticaapi.Domain.Repositories.DeliveryRepository;
 import com.api.logisticaapi.Domain.Services.RequestDeliveryService;
-import com.api.logisticaapi.Dtos.DeliveryDTO;
+import com.api.logisticaapi.Dtos.Request.DeliveryRequest;
+import com.api.logisticaapi.Dtos.Response.DeliveryDTO;
 import com.api.logisticaapi.Mapper.DeliveryMapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +37,10 @@ public class DeliveryController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public DeliveryDTO RequestDeliveryService(@Valid @RequestBody Delivery delivery) {
-        Delivery requestedDelivery = requestDeliveryService.requestDelivery(delivery);
+    public DeliveryDTO requestDelivery(@Valid @RequestBody DeliveryRequest deliveryInput) {
+        Delivery newDelivery = deliveryMapper.toEntity(deliveryInput);
+        Delivery requestedDelivery = requestDeliveryService.requestDelivery(newDelivery);
+
         return deliveryMapper.toModel(requestedDelivery);
     }
 
