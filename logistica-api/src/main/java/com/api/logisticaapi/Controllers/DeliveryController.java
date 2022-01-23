@@ -6,6 +6,8 @@ import javax.validation.Valid;
 
 import com.api.logisticaapi.Domain.Models.Delivery;
 import com.api.logisticaapi.Domain.Repositories.DeliveryRepository;
+import com.api.logisticaapi.Domain.Services.CancelDeliveryService;
+import com.api.logisticaapi.Domain.Services.FinishDeliveryService;
 import com.api.logisticaapi.Domain.Services.RequestDeliveryService;
 import com.api.logisticaapi.Dtos.Request.DeliveryRequest;
 import com.api.logisticaapi.Dtos.Response.DeliveryDTO;
@@ -17,6 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -34,6 +37,12 @@ public class DeliveryController {
 
     @Autowired
     private DeliveryMapper deliveryMapper;
+
+    @Autowired
+    private FinishDeliveryService finishDeliveryService;
+
+    @Autowired
+    private CancelDeliveryService cancelDeliveryService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -75,4 +84,15 @@ public class DeliveryController {
                 }).orElse(ResponseEntity.notFound().build());
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/{deliveryId}/deliver")
+    public void finishDelivery(@PathVariable Long deliveryId) {
+        finishDeliveryService.finishdelivery(deliveryId);
+    }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping("/{deliveryId}/cancel")
+    public void cancelDelivery(@PathVariable Long deliveryId) {
+        cancelDeliveryService.cancel(deliveryId);
+    }
 }

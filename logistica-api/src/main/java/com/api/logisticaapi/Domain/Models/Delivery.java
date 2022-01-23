@@ -1,6 +1,8 @@
 package com.api.logisticaapi.Domain.Models;
 
 import java.math.BigDecimal;
+import java.util.List;
+import java.util.ArrayList;
 
 import javax.persistence.Column;
 import javax.persistence.Embedded;
@@ -16,6 +18,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.groups.ConvertGroup;
 import javax.validation.groups.Default;
 import java.time.OffsetDateTime;
+import javax.persistence.CascadeType;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -26,8 +29,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 import com.api.logisticaapi.Domain.ValidationGroups;
+import com.api.logisticaapi.Domain.Exceptions.DomainException;
+import javax.persistence.OneToMany;
 
-// @Data
 @Getter
 @Setter
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
@@ -53,6 +57,9 @@ public class Delivery {
     @Embedded // Abstract information from another class but in the same table
     private Recipient recipient;
 
+    @OneToMany(mappedBy = "delivery", cascade = CascadeType.ALL)
+    private List<DeliveryEvent> deliveryEvents = new ArrayList<>();
+
     @Column()
     private BigDecimal delivery_price;
 
@@ -69,6 +76,32 @@ public class Delivery {
     @JsonInclude(Include.NON_NULL)
     @JsonProperty(access = Access.READ_ONLY)
     private OffsetDateTime delivery_date;
+
+    public DeliveryEvent addDeliveryEvent(String description) {
+        DeliveryEvent deliveryEvent = new DeliveryEvent();
+        deliveryEvent.setDelivery(this);
+        deliveryEvent.setEvent_date_time(OffsetDateTime.now());
+        deliveryEvent.setDescription(description);
+
+        this.getDeliveryEvents().add(deliveryEvent);
+        return deliveryEvent;
+    }
+
+    public void finishDelivery() {
+        if (!DeliveryStatus.PENDING.equals(getDelivery_status())) {
+            throw new DomainException("This delivery is not Pending, so it can not be finished!");
+        }
+        setDelivery_status(DeliveryStatus.DELIVERIED);
+        setDelivery_date(OffsetDateTime.now());
+
+    }
+
+    public void cancelDelivery() {
+        if (!DeliveryStatus.PENDING.equals(getDelivery_status())) {
+            throw new DomainException("This delivery is not Pending, so it can not be canceled!");
+        }
+        setDelivery_status(DeliveryStatus.CANCELLED);
+    }
 
     @Override
     public String toString() {
