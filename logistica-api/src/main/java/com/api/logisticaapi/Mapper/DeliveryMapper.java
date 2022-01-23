@@ -33,10 +33,8 @@ public class DeliveryMapper {
         try {
             RestTemplate template = new RestTemplate();
             String cep = delivery.getRecipient().getCep().replaceAll("-", "");
-            System.out.println(cep + "TOAQUi");
             String url = "https://viacep.com.br/ws/" + cep + "/json/";
             AddressDTO queryAddress = template.getForObject(url, AddressDTO.class);
-            System.out.println("TOAQUI" + queryAddress);
             delivery.getRecipient().setStreet(queryAddress.getLogradouro());
             delivery.getRecipient().setDistrict(queryAddress.getBairro());
             delivery.getRecipient().setCity(queryAddress.getLocalidade());

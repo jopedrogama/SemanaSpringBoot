@@ -1,0 +1,283 @@
+{
+	"info": {
+		"_postman_id": "eee96ab0-ff86-4875-8ea6-13fdde1478c3",
+		"name": "Semana SpringBoot",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Customers",
+			"item": [
+				{
+					"name": "ListAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}customers",
+							"host": [
+								"{{baseURL}}customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "GetById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}customers/2",
+							"host": [
+								"{{baseURL}}customers"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddCustomer",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Thi Thi\",\r\n    \"email\": \"thithi@gmail.com\",\r\n    \"phoneNumber\": \"6298123412\" \r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}customers",
+							"host": [
+								"{{baseURL}}customers"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "UpdateUser",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Vinicius da Silva\",\r\n    \"email\": \"vinicius123@hotmail.com\",\r\n    \"phoneNumber\": \"91234123345\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}customers/3",
+							"host": [
+								"{{baseURL}}customers"
+							],
+							"path": [
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteUser",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}customers/4",
+							"host": [
+								"{{baseURL}}customers"
+							],
+							"path": [
+								"4"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Delivery",
+			"item": [
+				{
+					"name": "CreateDelivery",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"customer\": {\r\n        \"id\": 2\r\n    },\r\n    \"recipient\": {\r\n        \"name\": \"Vasconcelos\",\r\n        \"buildingNumber\": \"00\",\r\n        \"addressComplement\": \"Casa\",\r\n        \"cep\": \"74270420\"\r\n    },\r\n    \"delivery_price\": 11.90\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}delivery",
+							"host": [
+								"{{baseURL}}delivery"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListAll",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}delivery",
+							"host": [
+								"{{baseURL}}delivery"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FindById",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}delivery/2",
+							"host": [
+								"{{baseURL}}delivery"
+							],
+							"path": [
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SetStatusToDelivered",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}delivery/2/deliver",
+							"host": [
+								"{{baseURL}}delivery"
+							],
+							"path": [
+								"2",
+								"deliver"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SetStatusToCancelled",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}delivery/22/cancel",
+							"host": [
+								"{{baseURL}}delivery"
+							],
+							"path": [
+								"22",
+								"cancel"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "DeliveryEvent",
+			"item": [
+				{
+					"name": "DeliveryEvents",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"description\": \"Teste description 2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseURL}}delivery/5/events",
+							"host": [
+								"{{baseURL}}delivery"
+							],
+							"path": [
+								"5",
+								"events"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ListDeliveryEvents",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseURL}}delivery/1/events",
+							"host": [
+								"{{baseURL}}delivery"
+							],
+							"path": [
+								"1",
+								"events"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "localhost:8080/",
+			"type": "string"
+		}
+	]
+}
